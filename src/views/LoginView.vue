@@ -40,16 +40,13 @@
     },
     computed: {
       ...mapState({
-        isLoading: state => state.isLoading
+        isLoading: state => state.auth.isLoading,
+        errors: state => state.auth.errors,
       }),
-      errors() {
-        return this.$store.state.auth.errors
-      }
     },
     methods: {
       loginPost() {
         store.dispatch("login", {email:this.email, password: this.password})
-        console.log(this.isLoading);
       }
     }
     
