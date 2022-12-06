@@ -8,19 +8,31 @@
                     </router-link>
                 </div>
 
-                <nav class="" >
-                    <router-link :to="{name:'home'}">Home</router-link> |
-                    <router-link :to="{name:'login'}">Login</router-link> |
-                    <router-link :to="{name: 'register'}">Register</router-link>
-                </nav>
+                <template v-if="isLoged">
+                    <p class="mb-0">{{user.username}}</p>
+                </template>
+
+                <template v-else-if="!isLoged">
+                    <nav class="" >
+                        <router-link :to="{name:'login'}">Login</router-link> |
+                        <router-link :to="{name: 'register'}">Register</router-link>
+                    </nav>
+                </template>
            </div>
         </div>
     </header>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: "Heafder",
+    computed: {
+        ...mapState({
+            user:state => state.auth.user,
+            isLoged: state => state.auth.isLoged,
+        })
+    }
 }
 </script>
 
