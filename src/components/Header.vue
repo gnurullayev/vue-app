@@ -8,11 +8,14 @@
                     </router-link>
                 </div>
 
-                <template v-if="isLoged">
-                    <p class="mb-0">{{user.username}}</p>
+                <template v-if="isLogedIn">
+                    <div class="d-flex align-items-center gap-2">
+                        <p class="mb-0">{{currentUser.username}}</p>
+                        <my-button class="btn-outline-primary" type="button" @click="logout">Logout</my-button>
+                    </div>
                 </template>
 
-                <template v-else-if="!isLoged">
+                <template v-else-if="isAnonimus">
                     <nav class="" >
                         <router-link :to="{name:'login'}">Login</router-link> |
                         <router-link :to="{name: 'register'}">Register</router-link>
@@ -24,14 +27,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { gettersTypes } from '@/modles/types'
+import { mapState,mapGetters } from 'vuex'
+import MyButton from '@/ui-comonents/MyButton.vue'
+
 export default {
+  components: { MyButton },
     name: "Heafder",
     computed: {
-        ...mapState({
-            user:state => state.auth.user,
-            isLoged: state => state.auth.isLoged,
-        })
+        ...mapGetters( {
+            currentUser: [gettersTypes.currentUser],
+            isLogedIn: [gettersTypes.isLogedIn],
+            isAnonimus: [gettersTypes.isAnonimus]
+        }),
+    },
+    methods: {
+        logout() {
+            this.$store.commit("logout")
+        }  
     }
 }
 </script>

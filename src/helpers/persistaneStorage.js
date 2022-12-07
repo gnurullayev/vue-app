@@ -8,9 +8,13 @@ export const setItem = (key, data) => {
 
 export const getItem = key => {
     try {   
-        localStorage.getItem(key)
+      return  localStorage.getItem(key)
     }catch(error) {
         console.log("Error getting data");
         return null
     }
+}
+
+export const removeItem = key => {
+    localStorage.removeItem(key)
 }

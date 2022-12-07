@@ -1,12 +1,28 @@
-import { setItem } from "@/helpers/persistaneStorage"
+import { removeItem, setItem } from "@/helpers/persistaneStorage"
 import router from "@/router"
 import AuthService from "@/service/auth"
+import { gettersTypes } from "./types"
 
 const state = {
     isLoading: false,
     user: null,
     errors: null,
     isLoged: null
+}
+
+
+
+const getters = {
+    [gettersTypes.currentUser] (state) {
+        return state.user
+    },
+    [gettersTypes.isLogedIn](state) {
+        return Boolean(state.isLoged)
+    },
+    [gettersTypes.isAnonimus](state) {
+        console.log(state.isLoged);
+        return state.isLoged === false
+    }
 }
 
 const mutations = {
@@ -39,6 +55,24 @@ const mutations = {
         state.isLoading = false
         state.errors = payload
         state.isLoged = false
+    },
+    getUserStart(state) {
+        state.isLoading = true
+    },
+    getUserSuccess (state, payload) {
+        state.isLoading = false
+        state.user = payload
+        state.isLoged = true
+    },
+    getUserFailure(state) {
+        state.isLoading = false
+        state.user = null
+        state.isLoged = false
+    },
+    logout(state) {
+        state.user = null
+        state.isLoged = false
+        removeItem("token")
     }
 }
 
@@ -74,6 +108,18 @@ const actions = {
                 })
             
         })
+    },
+
+    getUser({commit}) {
+        return new Promise(resolve => {
+            commit("getUserStart")
+            AuthService.getUser()
+                .then(res => {
+                    commit("getUserSuccess", res.data.user)
+                    resolve(res.data.user)
+                })
+                .catch(() => commit("getUserFailure"))
+        })
     }
 }
 
@@ -81,4 +127,5 @@ export default {
     state,
     mutations,
     actions,
+    getters
 }

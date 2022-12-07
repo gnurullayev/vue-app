@@ -9,6 +9,9 @@
     name: "App",
     components: {
       Header
+    },
+    mounted() {
+      this.$store.dispatch("getUser")
     }
   }
 </script>
