@@ -23,9 +23,14 @@
           >Read more</my-button
         >
         <my-button v-if="(user?.username === article.author.username)"
-          class="btn-outline-primary p-0 py-2 px-1"
+          class="btn-outline-danger p-0 py-2 px-1"
+          @click="deleteArticle(article.slug)"
+          >Delete</my-button
+        >
+        <my-button v-if="(user?.username === article.author.username)"
+          class="btn-outline-info p-0 py-2 px-1"
           @click="updateArticle(article.slug)"
-          >Update article</my-button
+          >Edit</my-button
         >
         <span
           class="text-secondary d-inline-block pt-2"
@@ -66,10 +71,14 @@ export default {
     updateArticle(slug) {
       this.$router.push(`/articles/${slug}/update-article`);
     },
+    deleteArticle (slug) {
+      this.$store.dispatch("deleteArticle",slug)
+        .then(res => {
+          this.$store.dispatch("getArticles")
+        })
+    }
   },
-  mounted() {
-    console.log(this.user);
-  },
+  
 };
 </script>
 

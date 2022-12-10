@@ -15,6 +15,7 @@
 import MyTextarea from '@/ui-comonents/MyTextarea.vue'
 import MyButton from '@/ui-comonents/MyButton.vue'
 import MyInput from '@/ui-comonents/MyInput.vue'
+import { mapState } from 'vuex'
  
 export default {
   name:"CreateArticle",
@@ -26,6 +27,11 @@ export default {
       body: "",
     }
   },
+  computed: {
+    ...mapState({
+      isLoading: state => state.articleHandler.isLoading
+    })
+  },
   methods: {
     createArticle() {
       const article = {title: this.title, description: this.description, body: this.body};
@@ -34,7 +40,15 @@ export default {
       this.description = "";
       this.body = ""
     }
+  },
+  watch: {
+    isLoading() {
+      if(!this.isLoading) {
+        this.$router.push("/")
+      }
+    }
   }
+
   
 }
 </script>

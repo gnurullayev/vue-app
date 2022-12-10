@@ -72,24 +72,6 @@ const actions = {
             context.commit("getArticleDetailFailure", e.message)
         }
     },
-    async createArticle (context,payload) {
-        try {
-            const res = await ArticlesService.createArticle(payload)
-            console.log(res.data);
-        }catch(e) {
-            alert(e.messaga);
-        }
-    },
-    async updateArticle(_,payload) {
-        console.log(payload);
-        try {
-            const res = await ArticlesService.updateArticle(payload)
-            console.log(res);
-        }catch(e) {
-            // alert(e.message)
-        }
-    }
-
 } 
 
 export default {

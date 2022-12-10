@@ -24,6 +24,7 @@
       body: "",
     }
   },
+  
   methods: {
     UpdateArticle() {
       const data = {title: this.title, description: this.description, body: this.body,tagList:[]};
