@@ -10,9 +10,14 @@
     components: {
       Header
     },
+    data() {
+      return {
+        loading:false
+      }
+    },
     mounted() {
-      this.$store.dispatch("getUser")
-    }
+      this.$store.dispatch("getUser");
+    },
   }
 </script>
 

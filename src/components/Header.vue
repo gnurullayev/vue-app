@@ -1,7 +1,7 @@
 <template>
     <header class="header ">
         <div class="container">
-           <div class="header-inner d-flex justify-content-between align-items-center">
+            <div class="header-inner d-flex justify-content-between align-items-center">
                <div class="logo">
                     <router-link to="/">
                         <img src="../assets/logo.svg" alt="" class="logo-img" >
@@ -10,6 +10,7 @@
 
                 <template v-if="isLogedIn">
                     <div class="d-flex align-items-center gap-2">
+                        <router-link :to="{name:'create-article'}" class="create-article">Create-article</router-link>
                         <p class="mb-0">{{currentUser.username}}</p>
                         <my-button class="btn-outline-primary" type="button" @click="logout">Logout</my-button>
                     </div>
@@ -21,14 +22,14 @@
                         <router-link :to="{name: 'register'}">Register</router-link>
                     </nav>
                 </template>
-           </div>
+            </div>
         </div>
     </header>
 </template>
 
 <script>
 import { gettersTypes } from '@/modles/types'
-import { mapState,mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import MyButton from '@/ui-comonents/MyButton.vue'
 
 export default {
@@ -53,5 +54,10 @@ export default {
     .logo-img {
         width: 100px;
         height: 60px;
+    }
+    .create-article {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.7);
+        font-weight: 5 00;
     }
 </style>

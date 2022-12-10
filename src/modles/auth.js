@@ -10,8 +10,6 @@ const state = {
     isLoged: null
 }
 
-
-
 const getters = {
     [gettersTypes.currentUser] (state) {
         return state.user
@@ -20,7 +18,6 @@ const getters = {
         return Boolean(state.isLoged)
     },
     [gettersTypes.isAnonimus](state) {
-        console.log(state.isLoged);
         return state.isLoged === false
     }
 }
