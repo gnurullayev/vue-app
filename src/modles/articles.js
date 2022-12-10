@@ -63,14 +63,19 @@ const actions = {
                 })
         })
     },
-    async getArticleDetail(context,payload) {
-        try {
+     getArticleDetail(context,payload) {
+        return new Promise ((reslove,reject) => {
             context.commit("getArticleDetailStart");
-            const res = await ArticlesService.getArticleDetail(payload)
-            context.commit("getArticleDetailSuccess", res.data.article)
-        }catch(e) {
-            context.commit("getArticleDetailFailure", e.message)
-        }
+            ArticlesService.getArticleDetail(payload)
+                .then(res => {
+                    context.commit("getArticleDetailSuccess", res.data.article)
+                    reslove(res.data.article)
+                })
+                .catch(e => {
+                    context.commit("getArticleDetailFailure", e.message)
+                    reject()
+                })
+        })
     },
 } 
 
